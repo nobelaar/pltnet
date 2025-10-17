@@ -1,0 +1,13 @@
+syntax = "proto3";
+package plt.plt.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "plt/x/plt/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "plt/x/plt/Params";
+  option (gogoproto.equal) = true;
+}
