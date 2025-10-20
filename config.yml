@@ -1,27 +1,15 @@
 version: 1
 validation: sovereign
 default_denom: uplt
-accounts: 
-- name: alice
-  coins:
-  - 20000token
-  - 200000000uplt
-- name: bob
-  coins:
-  - 10000token
-  - 100000000uplt
+
+accounts:
+  - name: bootstrap
+    coins:
+      - 100000000uplt
 client:
   openapi:
     path: docs/static/openapi.json
-faucet:
-  name: bob
-  coins:
-  - 5token
-  - 100000stake
+
 validators:
-- name: alice
-  bonded: 100000000uplt
-- name: validator1
-  bonded: 200000000uplt
-- name: validator2
-  bonded: 100000000uplt
+  - name: bootstrap
+    bonded: 100000000uplt
