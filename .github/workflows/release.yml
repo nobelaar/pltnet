@@ -23,6 +23,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up Go 1.22
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+
       - name: Prepare Release Variables
         id: vars
         uses: ignite/cli/actions/release/vars@main
