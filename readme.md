@@ -1,50 +1,176 @@
-# plt
-**plt** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli).
+# 🪙 PLT Blockchain
 
-## Get started
+**PLT** is a sovereign blockchain built using the **Cosmos SDK** and **CometBFT (Tendermint)** consensus engine.
+Originally scaffolded with [Ignite CLI](https://ignite.com/cli), PLT now runs as an independent chain and can be compiled, initialized, and started manually.
 
-```
-ignite chain serve
-```
+---
 
-`serve` command installs dependencies, builds, initializes, and starts your blockchain in development.
+## ⚙️ Requirements
 
-### Configure
+* Go **1.22+**
+* GNU Make, git, curl, jq
+* Linux / macOS environment
 
-Your blockchain in development can be configured with `config.yml`. To learn more, see the [Ignite CLI docs](https://docs.ignite.com).
+---
 
-### Web Frontend
+## 🧩 Installation
 
-Additionally, Ignite CLI offers a frontend scaffolding feature (based on Vue) to help you quickly build a web frontend for your blockchain:
+Clone and build the binary:
 
-Use: `ignite scaffold vue`
-This command can be run within your scaffolded blockchain project.
-
-
-For more information see the [monorepo for Ignite front-end development](https://github.com/ignite/web).
-
-## Release
-To release a new version of your blockchain, create and push a new tag with `v` prefix. A new draft release with the configured targets will be created.
-
-```
-git tag v0.1
-git push origin v0.1
+```bash
+git clone https://github.com/nobelaar/pltnet
+cd pltnet
+go mod tidy
+go build -o ~/go/bin/pltd ./cmd/pltd
 ```
 
-After a draft release is created, make your final changes from the release page and publish it.
+Verify installation:
 
-### Install
-To install the latest version of your blockchain node's binary, execute the following command on your machine:
+```bash
+pltd version
+```
+
+---
+
+## 🌱 Initialize the Node
+
+Create the local config and genesis file:
+
+```bash
+pltd init bootstrap --chain-id plt-test0
+```
+
+This creates the config directory at:
 
 ```
-curl https://get.ignite.com/nobelaar/pltnet@latest! | sudo bash
+~/.plt/config/
 ```
-`nobelaar/pltnet` should match the `username` and `repo_name` of the Github repository to which the source code was pushed. Learn more about [the install process](https://github.com/allinbits/starport-installer).
 
-## Learn more
+---
 
-- [Ignite CLI](https://ignite.com/cli)
-- [Tutorials](https://docs.ignite.com/guide)
-- [Ignite CLI docs](https://docs.ignite.com)
-- [Cosmos SDK docs](https://docs.cosmos.network)
-- [Developer Chat](https://discord.gg/ignite)
+## 🔑 Create a Local Key
+
+Generate a new keypair to act as the bootstrap account:
+
+```bash
+pltd keys add bootstrap
+```
+
+Save the mnemonic phrase safely — it’s the only way to recover your funds.
+
+---
+
+## 💰 Add Genesis Account
+
+Allocate initial tokens to your account:
+
+```bash
+pltd genesis add-genesis-account bootstrap 1000000000uplt
+```
+
+---
+
+## 🏗️ Generate the Validator Transaction
+
+Create a validator self-delegation transaction:
+
+```bash
+pltd genesis gentx bootstrap 1000000uplt --chain-id plt-test0
+```
+
+---
+
+## 📦 Collect Genesis Transactions
+
+Combine all gentxs (in this case only your own):
+
+```bash
+pltd genesis collect-gentxs
+```
+
+---
+
+## ✅ Validate the Genesis
+
+Before starting the chain, verify that the genesis file is valid:
+
+```bash
+pltd genesis validate-genesis
+```
+
+---
+
+## 🚀 Start the Node
+
+Edit `~/.plt/config/app.toml` and set:
+
+```toml
+minimum-gas-prices = "0.001uplt"
+```
+
+Then start your node:
+
+```bash
+pltd start
+```
+
+If you see logs similar to this, your node is live:
+
+```
+INF Starting ABCI server module=server
+INF Starting P2P Node module=p2p
+INF Starting RPC HTTP server on tcp://127.0.0.1:26657
+```
+
+---
+
+## 🌐 Accessing the Node
+
+* **Status**:
+
+  ```bash
+  curl http://127.0.0.1:26657/status
+  ```
+
+* **gRPC**: `localhost:9090`
+
+* **REST API**: `localhost:1317`
+
+---
+
+## 🔗 Public Node (Optional)
+
+To expose your node publicly:
+
+1. Edit `~/.plt/config/config.toml`
+
+   ```toml
+   laddr = "tcp://0.0.0.0:26656"
+   external_address = "tcp://<YOUR_PUBLIC_IP>:26656"
+   ```
+
+2. Open ports:
+
+   ```bash
+   sudo ufw allow 26656 26657 1317 9090
+   ```
+
+3. Get your peer ID:
+
+   ```bash
+   pltd tendermint show-node-id
+   ```
+
+   Share as:
+
+   ```
+   <node_id>@<ip>:26656
+   ```
+
+---
+
+## 📚 References
+
+* [Cosmos SDK Documentation](https://docs.cosmos.network)
+* [CometBFT (Tendermint)](https://docs.cometbft.com)
+* [Ignite CLI](https://docs.ignite.com)
