@@ -2,7 +2,7 @@
 
 > "Poder para crear, libertad para transaccionar, tecnología al servicio de la gente." 
 
-**PLT** es una blockchain soberana construida con **Cosmos SDK** y el motor de consenso **CometBFT**. Nace para devolver el control del valor a sus comunidades: una red moderna, abierta y gobernada por quienes la utilizan.
+**PLT** es una blockchain soberana construida con **Cosmos SDK** y el motor de consenso **CometBFT**. Una red moderna, abierta y gobernada por quienes la utilizan.
 
 ---
 
@@ -45,7 +45,7 @@ env PATH="$HOME/go/bin:$PATH" pltd version
 
 ## 🧭 Guía general de participantes
 
-PLT se sostiene por tres pilares de participación coordinada:
+PLT se sostiene por cuatro pilares de participación coordinada:
 
 1. **Usuarios**: exploran la red, gestionan cuentas y realizan transacciones soberanas.
 2. **Operadores de nodos**: garantizan disponibilidad, replican el estado y difunden bloques.
@@ -234,8 +234,7 @@ curl -s "http://127.0.0.1:1317/cosmos/bank/v1beta1/balances/<direccion>" | jq
 
 ## 🪙 Economía de PLT
 
-- **Oferta total fija**: emisión inicial determinada por génesis, sin inflación programada.
-- **Sin emisiones adicionales**: la soberanía se mantiene limitando la creación de nuevos tokens.
+- **Oferta total fija**: emisión inicial determinada por génesis, con inflación programada.
 - **Gas**: las tarifas se calculan en `uplt`, con precios mínimos configurables por cada nodo.
 - **Recompensas decrecientes**: los incentivos por bloque se reducen en el tiempo, privilegiando a validadores que mantienen disponibilidad sostenida.
 
@@ -268,7 +267,7 @@ curl -s "http://127.0.0.1:1317/cosmos/bank/v1beta1/balances/<direccion>" | jq
 - [Guía de CometBFT](https://docs.cometbft.com)
 - [Ignite CLI](https://docs.ignite.com)
 - [Repositorio PLT Blockchain](https://github.com/nobelaar/pltnet)
-- Comunidad: canales de discusión en Matrix/Telegram (consulta el manifiesto para invitaciones).
+- Comunidad: [Grupo de Telegram](https://t.me/+Rj6VWw-GdasyNzEx), [Canal de Telegram](https://t.me/pltnetwork)
 
 ---
 
