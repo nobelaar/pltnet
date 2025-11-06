@@ -38,12 +38,11 @@ jobs:
       - name: Build binary
         run: |
           mkdir -p dist
-          TAG_ARG=""
-          if [ -n "${{ matrix.build_tags }}" ]; then
-            TAG_ARG="-tags ${{ matrix.build_tags }}"
-          fi
-          CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} \
-            go build $TAG_ARG -o dist/${{ matrix.artifact }} ./cmd/pltd/main.go
+          export CGO_ENABLED=0
+          export GOOS=${{ matrix.goos }}
+          export GOARCH=${{ matrix.goarch }}
+          export SONIC_GO_PURE=1
+          go build -tags "purego" -o dist/${{ matrix.artifact }} ./cmd/pltd/main.go
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

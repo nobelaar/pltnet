@@ -1,6 +1,6 @@
 module plt
 
-go 1.24.0
+go 1.24.2
 
 replace (
 	// fix upstream GHSA-h395-qcrw-5vmq vulnerability.
