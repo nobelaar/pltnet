@@ -6,17 +6,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
+        strategy:
       matrix:
         include:
           - goos: linux
             goarch: amd64
             artifact: pltd-linux-amd64
-            build_tags: ""
+            build_tags: purego
           - goos: darwin
             goarch: amd64
             artifact: pltd-darwin-amd64
-            build_tags: ""
+            build_tags: purego
           - goos: windows
             goarch: amd64
             artifact: pltd-windows-amd64.exe
